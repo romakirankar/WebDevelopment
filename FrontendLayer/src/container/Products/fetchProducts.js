@@ -9,30 +9,24 @@ const FetchProducts = (props) => {// { onUpdateProductList, setProdList }
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                let productList = localStorage.getItem('productList');
-                if (!productList) {
-                    const response = await axios.get('http://localhost:9000/api/getProducts');
-                    // Convert binary image data to base64-encoded string for each product
-                    const updatedProducts = response.data.map(product => ({
-                        ...product,
-                        productImageFile: product.productImageFile ? `data:image/jpeg;base64,${bufferToBase64(product.productImageFile.data)}` : null
-                    }));
+                const response = await axios.get('http://localhost:9000/api/getProducts');
+                // Convert binary image data to base64-encoded string for each product
+                const updatedProducts = response.data.map(product => ({
+                    ...product,
+                    productImageFile: product.productImageFile ? `data:image/jpeg;base64,${bufferToBase64(product.productImageFile.data)}` : null
+                }));
 
-                    setProducts(updatedProducts);
-                    props.onUpdateProductList(updatedProducts);
-                    props.setProdList(updatedProducts);
-
-                } else {
-                    setProducts(JSON.parse(productList)); // Parse the stored string to array
-                    props.setProdList(JSON.parse(productList)); // Set productList in parent component
-                }
+                setProducts(updatedProducts);
+                props.onUpdateProductList(updatedProducts);
+                props.setProdList(updatedProducts);
+                
             } catch (error) {
                 console.error('Error in fetching products', error);
             }
         };
         fetchProducts();
-        
-    }, []); //[onUpdateProductList, setProdList]
+
+    }, []); 
 
     // Convert binary image data to base64-encoded string
     const bufferToBase64 = buffer => {
