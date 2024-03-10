@@ -13,7 +13,6 @@ const authenticationRoutes = require('./routes/routingCalls');
 env.config();
 
 //set mongodb connection using connection string -(not yet used) the user id and password was created in MongoDB which i am storing NOW IN .environment for modularization
-//sumazon is the name of our Mongodb Database ; user_id = db_5591 ; pw: admin_5591 in the below connection string
 mongoDb.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.hbmknxf.mongodb.net/${process.env.DB_DATABASE_NAME}?retryWrites=true&w=majority`
 ).then(() => {
     console.log("Database Connected!");

@@ -1,7 +1,0 @@
-SRC folder has 3 sub folders:
-1. Routes is used to set the route to the correct api
-2. Models for database
-3. Controller
-
-flow-
-index.server.js -> api in routes -> controller functionaility executed
