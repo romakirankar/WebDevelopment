@@ -21,16 +21,15 @@ exports.upsertUser = (request, response) => {
                 return response.status(404).json();
             }
 
-            const { _id, name, contactNumber, address, userName, email, password } = userPayload;
-
+            const { _id, name, contactNumber, address, userName, email, password, role} = userPayload;
             //user object
             const userObj = new User(
-                { _id, name, contactNumber, address, userName, email, password, });
+                { _id, name, contactNumber, address, userName, email, password, role });
 
             User.updateOne({ userName: userObj.userName }, userObj, { upsert: upsert })
                 .then((userRecord) => {
                     if (userRecord) {
-                        response.status(201).json();
+                        response.status(200).json();
                     }
                 }).catch((err) => {
                     return response.status(500).json();
@@ -51,10 +50,10 @@ exports.userSignIn = (request, response) => {
                     const { userName } = userRecord.userName;
                     //set token to control a session for login and logout
                     const sessionToken = jwt.sign({ userName }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-                    response.status(200).json({ message: 'User Login Successful!', user: userRecord, sessionToken: sessionToken });
+                    response.status(200).json({ user: userRecord, sessionToken: sessionToken });
                 }
                 else {
-                    response.status(404).json({ message: 'Invalid Password' });
+                    response.status(404).json({ message: 'Invalid credentials' });
                 }
             } else {
                 response.status(404).json({ message: "Invalid credentials" });

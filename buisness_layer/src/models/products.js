@@ -5,8 +5,8 @@ const productSchema = new mongoDb.Schema({
     productName: String,
     productPrice: Number,
     productDescription: String,
-    productImageFile: Buffer // Storing image buffer as binary data (bitmap)
-  
+    productImageFile: Buffer, // Storing image buffer as binary data (bitmap)
+    productQuantity: Number
 });
 
 // Create Product model
